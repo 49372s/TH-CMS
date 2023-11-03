@@ -23,7 +23,10 @@ function AdminAuthenticate($user,$pass){
     $res = $pdo->query("SELECT * from user");
     foreach($res as $val){
         if($val[1] == $user && $val[4]==getSHA($pass) && $val[6]==3){
-            APIResponse(true,md5(date("Ym").$val[0].$val[1]));
+            setcookie("token",md5(date("Ym").$val[0].$val[1]),time() + 60 * 60 * 24 * 30, "/", null, true);
+            http_response_code(200);
+            header('Location: /dashboard');
+            exit();
         }
     }
     APIResponse(false,"Login authenticate is failed.");
