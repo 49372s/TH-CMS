@@ -18,7 +18,7 @@ try{
     //成功しているのでこのまま保存処理を行う
     //データベースビルド
     //ユーザーテーブルを作成する
-    $sql = "CREATE TABLE IF NOT EXISTS `test`.`user` ( `uid` VARCHAR(255) NOT NULL COMMENT '一意' , `handle` VARCHAR(255) NOT NULL , `nickname` VARCHAR(255) NOT NULL , `mail` VARCHAR(255) NOT NULL , `pwd` VARCHAR(255) NOT NULL , `mi` VARCHAR(255) NOT NULL COMMENT 'Misskey自動投稿用トークン' , PRIMARY KEY (`uid`, `handle`)) ENGINE = InnoDB;";
+    $sql = "CREATE TABLE IF NOT EXISTS `test`.`user` ( `uid` VARCHAR(255) NOT NULL COMMENT '一意' , `handle` VARCHAR(255) NOT NULL , `nickname` VARCHAR(255) NOT NULL , `mail` VARCHAR(255) NOT NULL , `pwd` VARCHAR(255) NOT NULL , `mi` VARCHAR(255) NOT NULL COMMENT 'Misskey自動投稿用トークン' ,`permit` INT(5) NOT NULL, PRIMARY KEY (`uid`, `handle`)) ENGINE = InnoDB;";
     if($pdo -> query($sql) == false){
         echo json_encode(array("result"=>"fail","detail"=>"データベースの構築に失敗しました。権限を確認してください。"));
         exit();
@@ -60,7 +60,7 @@ try{
     }
 
     include('./includes/plugins/uuid.php');
-    $sql = "INSERT into user(uid,handle,nickname,mail,pwd,mi) value(:u,:h,:n,:m,:p,:mi)";
+    $sql = "INSERT into user(uid,handle,nickname,mail,pwd,mi,permit) value(:u,:h,:n,:m,:p,:mi,:pe)";
     $pre = $pdo->prepare($sql);
     $arr = array(
         ":u"=>UuidV4Factory::generate(),
@@ -68,7 +68,8 @@ try{
         ":n"=>$_POST['name'],
         ":p"=>hash("sha3-512",$_POST['pwd']),
         ":m"=>"null@null.pointer.exception",
-        ":mi"=>"null"
+        ":mi"=>"null",
+        ":pe"=>3
     );
     if($pre -> execute($arr) != 1){
         echo json_encode(array("result"=>"fail","detail"=>"データベースの構築に失敗しました。権限を確認してください。"));
@@ -84,15 +85,19 @@ try{
     $_mysql_user_password = $_POST['dbp'];
 
     $config_file = 
-'<?php $CMS_CONFIG = array(
+'<?php function getConfig(){$CMS_CONFIG = array(
     "SITE_NAME"=>"'.$_sitename.'",
     "SITE_DETAIL"=>"'.$_sitedetails.'",
+    "SITE_LOGO"=>"/content/system/image/tkngh.png",
     "mysql"=>array(
         "host"=>"'.$_mysql_host.'",
         "database"=>"'.$_mysql_dbname.'",
         "username"=>"'.$_mysql_user_name.'",
         "password"=>"'.$_mysql_user_password.'"
 ));
+return $CMS_CONFIG;
+}
+$CMS_CONFIG = getConfig();
 function getFileList($dir) {
     $files = glob(rtrim($dir, "/") . "/*");
     $list = array();
