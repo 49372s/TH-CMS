@@ -1,0 +1,36 @@
+/* Spinner CSS*/
+@charset 'UTF-8';
+
+#loading{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    
+    /* for Blink*/
+    backdrop-filter: blur(6px);
+    /* for apple webkit*/
+    -webkit-backdrop-filter: blur(6px);
+    /* for Gecko*/
+    background-color: rgba(0 0 0 / 0.5);
+
+    z-index: 10;
+
+    text-align: center;
+}
+
+#loading.show{
+    display: block;
+}
+
+#loading #spinner{
+    position: relative;
+    
+    top: 50%;
+
+    text-align: center;
+    width: 3rem;
+    height: 3rem;
+}

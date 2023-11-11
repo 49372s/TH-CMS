@@ -21,6 +21,9 @@ if(file_exists('./th-config.php')){
                 <input type="text" id="site-name" placeholder="サイト名" class="form-control mb-4">
                 <h2 class="mb-2">サイトの詳細</h2>
                 <input type="text" id="site-descript" class="form-control" placeholder="サイト概要">
+                <h2 class="mb-3">サイトの公開URL</h2>
+                <p>正しく設定しなければ、想定した通りの動作を行わなくなる場合があります。末尾の[/]は省いてください。</p>
+                <input type="url" id="site-url" class="form-control" placeholder="https://example.com">
             </section>
             <section class="shadow mb-5 me-auto ms-auto p-4 rounded">
                 <h2>データベースへの接続設定</h2>
@@ -122,6 +125,7 @@ if(file_exists('./th-config.php')){
                     "dbp":getFormdata("database-password"),
                     "siteName":getFormdata("site-name"),
                     "siteDetail":getFormdata("site-descript"),
+                    "siteUrl":getFormdata("site-url"),
                     "uid":getFormdata("user_handle"),
                     "name":getFormdata("user_nickname"),
                     "pwd":getFormdata("user_password")

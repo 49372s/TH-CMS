@@ -23,7 +23,7 @@ function AdminAuthenticate($user,$pass){
     $res = $pdo->query("SELECT * from user");
     foreach($res as $val){
         if($val[1] == $user && $val[4]==getSHA($pass) && $val[6]==3){
-            setcookie("token",md5(date("Ym").$val[0].$val[1]),time() + 60 * 60 * 24 * 30, "/", null, true);
+            setcookie("token",md5(date("Ym").$val[0].$val[4]),time() + 60 * 60 * 24 * 30, "/", null, true);
             http_response_code(200);
             header('Location: /dashboard');
             exit();
@@ -36,10 +36,24 @@ function APIAuthenticate($token){
     $pdo = cdb();
     $res = $pdo->query("SELECT * from user");
     foreach($res as $val){
-        if($token == md5(date("Ym").$val[0].$val[1])){
+        if($token == md5(date("Ym").$val[0].$val[4])){
             return true;
         }
     }
     return false;
+}
+
+function emptyCheck($keys,$mode="get"){
+    foreach($keys as $key){
+        if($mode=="get"){
+            if(empty($_GET[$key])){
+                APIResponse(false,"Bad request(GET).");
+            }
+        }else{
+            if(empty($_POST[$key])){
+                APIResponse(false,"Bad request(POST).".$key);
+            }
+        }
+    }
 }
 ?>

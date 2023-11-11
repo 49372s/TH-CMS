@@ -18,7 +18,7 @@ try{
     //成功しているのでこのまま保存処理を行う
     //データベースビルド
     //ユーザーテーブルを作成する
-    $sql = "CREATE TABLE IF NOT EXISTS `test`.`user` ( `uid` VARCHAR(255) NOT NULL COMMENT '一意' , `handle` VARCHAR(255) NOT NULL , `nickname` VARCHAR(255) NOT NULL , `mail` VARCHAR(255) NOT NULL , `pwd` VARCHAR(255) NOT NULL , `mi` VARCHAR(255) NOT NULL COMMENT 'Misskey自動投稿用トークン' ,`permit` INT(5) NOT NULL, PRIMARY KEY (`uid`, `handle`)) ENGINE = InnoDB;";
+    $sql = "CREATE TABLE IF NOT EXISTS `test`.`user` ( `uid` VARCHAR(255) NOT NULL COMMENT '一意' , `handle` VARCHAR(255) NOT NULL , `nickname` VARCHAR(255) NOT NULL , `mail` VARCHAR(255) NOT NULL , `pwd` VARCHAR(255) NOT NULL , `mi` VARCHAR(255) NOT NULL COMMENT 'Misskey自動投稿用トークン' ,`permit` INT(5) NOT NULL, `instance` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Misskey URL', PRIMARY KEY (`uid`, `handle`)) ENGINE = InnoDB;";
     if($pdo -> query($sql) == false){
         echo json_encode(array("result"=>"fail","detail"=>"データベースの構築に失敗しました。権限を確認してください。"));
         exit();
@@ -79,6 +79,7 @@ try{
     //設定ファイルを作成する
     $_sitename = $_POST['siteName'];
     $_sitedetails = $_POST['siteDetail'];
+    $_siteurl = $_POST['siteUrl'];
     $_mysql_host = $_POST['dbh'];
     $_mysql_dbname = $_POST['dbn'];
     $_mysql_user_name = $_POST['dbu'];
@@ -88,6 +89,7 @@ try{
 '<?php function getConfig(){$CMS_CONFIG = array(
     "SITE_NAME"=>"'.$_sitename.'",
     "SITE_DETAIL"=>"'.$_sitedetails.'",
+    "SITE_URL"=>"'.$_siteurl.'",
     "SITE_LOGO"=>"/content/system/image/tkngh.png",
     "mysql"=>array(
         "host"=>"'.$_mysql_host.'",
