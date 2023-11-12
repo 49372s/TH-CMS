@@ -16,9 +16,13 @@ if(loginCheck()){
     <body>
         <style>
             body{
-                background-image: url(<?=$CMS_CONFIG["loginDisplay"]["background"] ?>);
                 background-size: cover;
                 background-repeat: no-repeat;
+                <?php
+                if($CMS_CONFIG["loginDisplay"]["background"]!=null){
+                    echo("background-image: url(".$CMS_CONFIG["loginDisplay"]["background"].");");
+                }
+                ?>
             }
             #formContainer{
                 position: absolute;
@@ -29,7 +33,7 @@ if(loginCheck()){
                 left: 50%;
                 <?php
                 if($CMS_CONFIG["loginDisplay"]["theme"]=="dark"){
-                    echo"color: whitesmoke";
+                    echo("color: whitesmoke");
                 }
                 ?>
             }

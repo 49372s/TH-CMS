@@ -100,7 +100,12 @@ try{
         "database"=>"'.$_mysql_dbname.'",
         "username"=>"'.$_mysql_user_name.'",
         "password"=>"'.$_mysql_user_password.'"
-));
+    )
+    "loginDisplay"=>array(
+        "background"=>null,
+        "theme"=>"light"
+    )
+);
 return $CMS_CONFIG;
 }
 $CMS_CONFIG = getConfig();
