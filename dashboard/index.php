@@ -32,7 +32,7 @@ loginRedirect();
         </div>
         <div class="container mt-3 mb-3 m-auto rounded p-3 shadow">
             <h2>管理</h2>
-            管理メニュープラグインがありません。
+            <a href="./control/" class="btn btn-primary m-1">コントロールパネル</a>
         </div>
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

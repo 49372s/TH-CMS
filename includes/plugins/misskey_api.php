@@ -12,4 +12,19 @@ function APIRequest($host,$api,$payload = array()){
     $res = json_decode($res, true);
     return $res;
 }
+
+function checkAuthenticateMisskey($uid){
+    $pdo = cdb();
+    $res = $pdo->query("SELECT * from user");
+    foreach($res as $val){
+        if($uid==$val[0]){
+            if($val[5]=="null"){
+                return false;
+            }else{
+                return true;
+            }
+        }
+    }
+    return false;
+}
 ?>

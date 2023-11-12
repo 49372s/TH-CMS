@@ -65,7 +65,7 @@ if($mode === true || $mode === "1" || $mode === "true"){
 
     //APIアクセス
     $param = array(
-        "text"=>$title." - ".$CMS_CONFIG["SITE_NAME"]."\n".$CMS_CONFIG["site_url"]."/article/?id=".$uuid,
+        "text"=>$title." - ".$CMS_CONFIG["SITE_NAME"]."\n".$CMS_CONFIG["SITE_URL"]."/article/?id=".$uuid,
         "i"=>$token
     );
     APIRequest($server,"notes/create",$param);

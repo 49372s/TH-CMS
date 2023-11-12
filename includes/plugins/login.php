@@ -43,6 +43,17 @@ function APIAuthenticate($token){
     return false;
 }
 
+function getUserID($token){
+    $pdo = cdb();
+    $res = $pdo->query("SELECT * from user");
+    foreach($res as $val){
+        if($token == md5(date("Ym").$val[0].$val[4])){
+            return $val[0];
+        }
+    }
+    return false;
+}
+
 function emptyCheck($keys,$mode="get"){
     foreach($keys as $key){
         if($mode=="get"){

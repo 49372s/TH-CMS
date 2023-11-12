@@ -139,9 +139,9 @@ function getArticleByName(title){
 
 function requestDelete(id){
     toggleLoading()
-    $.post("/api/admin/edit/delete/",{"id":id},(data)=>{
+    $.post("/api/articles/delete/",{"id":id},(data)=>{
         if(data.result==true){
-            showModal("記事の削除","記事の削除に成功しました。");
+            window.alert("記事の削除に成功しました。");
             document.getElementById('search-article-edit').ast.value = "";
             getArticle();
             toggleLoading(false);
