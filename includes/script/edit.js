@@ -108,7 +108,7 @@ if(document.getElementById('search-category-edit')!=undefined){
         if(search.act.value == undefined || search.act.value == null || search.act.value == ""){
             getCategory();
         }else{
-            getCategoryByName(search.act.value);
+            getCategory(search.act.value);
         }
     }
     control.onsubmit = (e)=>{
@@ -161,9 +161,9 @@ function view(id){
     window.open("/view/?id="+id);
 }
 
-function getCategory(){
+function getCategory(q = ""){
     toggleLoading()
-    $.post("/api/admin/category/get/",(data)=>{
+    $.post("/api/categories/",{"q":q},(data)=>{
         if(data.result==true){
             document.getElementById('category-list').innerHTML = data.data;
             toggleLoading(false);
@@ -183,12 +183,27 @@ function getCategoryByName(title){
 
 function requestDeleteCat(id){
     toggleLoading()
-    $.post("/api/admin/edit/delete/category/",{"id":id},(data)=>{
+    $.post("/api/categories/delete/",{"id":id},(data)=>{
         if(data.result==true){
-            showModal("カテゴリの削除","カテゴリの削除に成功しました。");
+            window.alert("カテゴリの削除","カテゴリの削除に成功しました。");
             document.getElementById('search-category-edit').act.value = "";
             getCategory();
             toggleLoading(false);
         }
     })
+}
+
+if(document.getElementById('add-category')!=undefined){
+    const form = document.getElementById('add-category');
+    form.onsubmit = (e)=>{
+        e.preventDefault();
+        $.post("/api/categories/add/",{"name":form.category.value},(data)=>{
+            if(data.result==true){
+                window.alert("カテゴリーを追加しました。");
+                location.reload();
+            }else{
+                window.alert(data.data);
+            }
+        })
+    }
 }
