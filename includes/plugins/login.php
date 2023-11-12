@@ -56,4 +56,14 @@ function emptyCheck($keys,$mode="get"){
         }
     }
 }
+
+function verifyUser($uid){
+    $pdo = cdb();
+    $res = $pdo->query("SELECT * From user");
+    foreach($res as $val){
+        if($uid == $val[0]){
+            return $val[2];
+        }
+    }
+}
 ?>

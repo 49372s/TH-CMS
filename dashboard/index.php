@@ -26,8 +26,7 @@ loginRedirect();
         <div class="container mt-3 mb-3 m-auto rounded p-3 shadow">
             <h2>編集メニュー</h2>
             <a class="btn btn-primary m-1" href="./new/">新規作成</a>
-            <button class="btn btn-primary m-1">記事編集</button>
-            <button class="btn btn-primary m-1">記事一覧</button>
+            <a class="btn btn-primary m-1" href="./list/article.php">記事一覧</a>
             <button class="btn btn-primary m-1">ファイル</button>
             <button class="btn btn-primary m-1">タグ一覧</button>
         </div>

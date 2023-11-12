@@ -42,6 +42,40 @@ if(document.getElementById('new-article')!=undefined){
     }
 }
 
+if(document.getElementById('edit-article')!=undefined){
+    const form = document.getElementById('edit-article');
+    form.onsubmit = (e)=>{
+        e.preventDefault();
+        //処理に時間がかかることが予想されるため、Progress Barを配置する。
+        document.getElementById('loading').classList.add('show');
+        const form = document.getElementById('edit-article');
+        //Authorを取得する。
+        $.post("/api/users/get/",(data)=>{
+            if(data.result==true){
+                $.post("/api/articles/edit/",{"id":form.id.value,"category":form.cat.value,"title":form.title.value,"body":form.body.value,"mode":form.autoPost.checked,"token":data.data.mi,"instance":data.data.url},(res)=>{
+                    if(res.result==true){
+                        document.getElementById('loading').classList.remove('show');
+                        window.alert('記事を編集しました。');
+                        location.href = "/dashboard/list/article.php";
+                    }
+                }).fail(
+                    ()=>{
+                        window.alert("APIの実行に失敗しました。");
+                        document.getElementById('loading').classList.remove('show');
+                    }
+                )
+            }
+        })
+    }
+    window.onload = function(){
+        $.post("/api/admin/category/get/",(data)=>{
+            if(data.result==true){
+                document.getElementById('datalistOptions').innerHTML = data.data;
+            }
+        })
+    }
+}
+
 //記事一覧
 if(document.getElementById('search-article-edit')!=undefined){
     const search = document.getElementById('search-article-edit');
@@ -54,7 +88,7 @@ if(document.getElementById('search-article-edit')!=undefined){
         if(search.ast.value == undefined || search.ast.value == null || search.ast.value == ""){
             getArticle();
         }else{
-            getArticleByName(search.ast.value);
+            getArticle(search.ast.value);
         }
     }
     control.onsubmit = (e)=>{
@@ -83,9 +117,9 @@ if(document.getElementById('search-category-edit')!=undefined){
 }
 
 
-function getArticle(){
+function getArticle(q = ""){
     toggleLoading()
-    $.post("/api/admin/get/",(data)=>{
+    $.post("/api/articles/",{"q":q},(data)=>{
         if(data.result==true){
             document.getElementById('article-list').innerHTML = data.data;
             toggleLoading(false);

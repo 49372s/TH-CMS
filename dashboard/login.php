@@ -14,8 +14,37 @@ if(loginCheck()){
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        <style>
+            body{
+                background-image: url(<?=$CMS_CONFIG["loginDisplay"]["background"] ?>);
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+            #formContainer{
+                position: absolute;
+                backdrop-filter: blur(6px);
+                -webkit-backdrop-filter: blur(6px);
+                top: 50%;
+                transform: translate(-50%,-50%);
+                left: 50%;
+                <?php
+                if($CMS_CONFIG["loginDisplay"]["theme"]=="dark"){
+                    echo"color: whitesmoke";
+                }
+                ?>
+            }
+            .options{
+                <?php
+                if($CMS_CONFIG["loginDisplay"]["theme"]=="dark"){
+                    echo("color: whitesmoke");
+                }else{
+                    echo("color: gray;");
+                }
+                ?>
+            }
+        </style>
         <?php include('../includes/template/nav.php');?>
-        <div class="container mt-5 m-auto p-3 rounded shadow text-center">
+        <div class="container mt-5 m-auto p-3 rounded shadow text-center" id="formContainer">
             <div><img src="<?=$CMS_CONFIG["SITE_LOGO"]?>" style="width: auto; height: 80px;"></div>
             <form action="/api/users/login/" method="post" class="m-auto mt-3 w-50 text-start">
                 <label for="handle" class="form-label">ユーザーID(ハンドル)</label>
@@ -25,8 +54,8 @@ if(loginCheck()){
                 <div class="text-center">
                     <button class="btn btn-primary">ログイン</button>
                 </div>
-                <a href="forget.php" class="text-secondary">パスワードを忘れた</a> | 
-                <a href="/" class="text-secondary">サービスに戻る</a>
+                <a href="forget.php" class="options">パスワードを忘れた</a> | 
+                <a href="/" class="options">サービスに戻る</a>
             </form>
         </div>
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>

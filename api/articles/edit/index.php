@@ -4,7 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/includes/modules/markdown/Markdown.inc.
 use Michelf\Markdown;
 //利用する変数配列群
 $key = array(
-    "author",
+    "id",
     "category",
     "title",
     "body",
@@ -16,7 +16,7 @@ if(!APIAuthenticate($_COOKIE['token'])){
 }
 
 //データを一度格納
-$author = $_POST['author'];
+$id = $_POST['id'];
 $category = $_POST['category'];
 $title = $_POST['title'];
 $body = $_POST['body'];
@@ -34,12 +34,12 @@ if(!getCategory(0,$category)){
 //記事のIDを取得する
 $uuid = UuidV4Factory::generate();
 $pdo = cdb();
-$sql = "insert into article(id,title,author,category,lastupdate,militime) values(:i,:t,:a,:c,:l,:m)";
+//$sql = "insert into article(id,title,author,category,lastupdate,militime) values(:i,:t,:a,:c,:l,:m)";
+$sql = "UPDATE article set title=:t, category=:c, lastupdate=:l, militime=:m where id=:i";
 $pre = $pdo->prepare($sql);
 $arr = array(
-    ":i"=>$uuid,
+    ":i"=>$id,
     ":t"=>$title,
-    ":a"=>$author,
     ":c"=>$category,
     ":l"=>date("Y/m/d H:i:s"),
     ":m"=>time()
@@ -54,7 +54,7 @@ $html = $body;
 if(!file_exists($_SERVER['DOCUMENT_ROOT']."/content/data/")){
     mkdir($_SERVER['DOCUMENT_ROOT']."/content/data/");
 }
-$fhd = fopen($_SERVER['DOCUMENT_ROOT']."/content/data/blog_$uuid.html","w");
+$fhd = fopen($_SERVER['DOCUMENT_ROOT']."/content/data/blog_$id.html","w");
 fwrite($fhd,$html);
 fclose($fhd);
 
@@ -65,7 +65,7 @@ if($mode === true || $mode === "1" || $mode === "true"){
 
     //APIアクセス
     $param = array(
-        "text"=>$title." - ".$CMS_CONFIG["SITE_NAME"]."\n".$CMS_CONFIG["site_url"]."/article/?id=".$uuid,
+        "text"=>"【編集通知】".$title." - ".$CMS_CONFIG["SITE_NAME"]."\n".$CMS_CONFIG["site_url"]."/article/?id=".$uuid,
         "i"=>$token
     );
     APIRequest($server,"notes/create",$param);
