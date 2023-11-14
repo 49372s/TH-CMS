@@ -56,7 +56,7 @@ loginRedirect();
                 $.post("/api/files/get/",{"q":q},(data)=>{
                     if(data.result==true){
                         data.data.forEach(element => {
-                                document.getElementById('fileList').innerHTML = document.getElementById('fileList').innerHTML + '<li class="list-group-item"><img src="/content/data/image_'+element["id"]+'" class="w-50 ms-auto me-auto" style="display: block"><hr>'+element["name"]+'<a class="btn btn-success ms-3" onclick="copyToCB(\'/content/data/image_'+element['id']+'\')">リンクをコピー</a><button class="btn btn-danger ms-3" onclick="requestDelete(\''+element['id']+'\'">削除</button></li>'
+                                document.getElementById('fileList').innerHTML = document.getElementById('fileList').innerHTML + '<li class="list-group-item"><img src="/content/data/image_'+element["id"]+'" class="w-50 ms-auto me-auto" style="display: block"><hr>'+element["name"]+'<a class="btn btn-success ms-3" onclick="copyToCB(\'/content/data/image_'+element['id']+'\')">リンクをコピー</a><button class="btn btn-danger ms-3" onclick="requestDelete(\''+element['id']+'\')">削除</button></li>'
                         });
                     }
                 });
