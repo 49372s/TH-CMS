@@ -20,7 +20,12 @@ foreach($res as $val){
             continue;
         }
     }
-    $html = $html . '<a class="list-group-item" href="/article/?id='.$val[0].'"><span style="font-size: 2em">'.$val[1].'</span><br><span class="text-secondary">最終更新: '.$val[4].'</span></a>';
+    if(!empty($_POST["c"])){
+        if(mb_strpos($val[3],$_POST["c"])===false){
+            continue;
+        }
+    }
+    $html = $html . '<a class="list-group-item" href="/article/?id='.$val[0].'"><div style="line-height: 2em;position: relative;"><span style="font-size: 2em">'.$val[1].'</span><span class="ms-3 badge bg-primary" style="position: absolute; top: 50%;transform: translateY(-50%)">'.$val[3].'</span></div><span class="text-secondary">最終更新: '.$val[4].'</span></a>';
 }
 APIResponse(true,$html);
 ?>

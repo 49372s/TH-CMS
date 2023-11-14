@@ -9,6 +9,6 @@ function listing(id){
 function buildLinks(elementId, arr){
     dei = document.getElementById(elementId);
     arr.forEach(element => {
-        dei.innerHTML = dei.innerHTML + "<a href=\""+element.url+"\" class=\"list-group-item\">"+element.title+"<span class=\"ms-3 badge bg-primary\">"+element.category+"</span><br>更新: "+element.lastupdate+"</a>"
+        dei.innerHTML = dei.innerHTML + "<div class=\"list-group-item\"><a href=\""+element.url+"\">"+element.title+"</a><a class=\"ms-3 badge bg-primary\" href=\"/search/?c="+element.category+"\" style=\"text-decoration: none;\">"+element.category+"</a><br>更新: "+element.lastupdate+"</div>"
     });
 }
