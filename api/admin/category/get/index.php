@@ -1,8 +1,8 @@
 <?php
 include($_SERVER['DOCUMENT_ROOT']."/th-config.php");
-if(!APIAuthenticate($_COOKIE['token'])){
-    APIResponse(false,"Authenticate failed");
-}
+//if(!APIAuthenticate($_COOKIE['token'])){
+//    APIResponse(false,"Authenticate failed");
+//}
 $pdo = cdb();
 $sql = "select * from category";
 $html = "";

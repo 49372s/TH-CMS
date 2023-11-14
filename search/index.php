@@ -21,9 +21,16 @@ include_once('../th-config.php');
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <form action="./" method="get" class="d-flex">
-                                <input type="search" name="q" class="form-control" placeholder="検索">
+                            <form action="./" method="get">
+                                <div class="d-flex">
+                                    <input type="search" name="q" class="form-control" placeholder="検索" value="<?=$_GET['q']??""?>">
                                     <button type="submit" class="btn btn-outline-success" style="width: 100px;">検索</button>
+                                </div>
+                                <hr>
+                                <label for="categories" class="form-label">カテゴリー</label>
+                                <input class="form-control" list="datalistOptions" id="categories" placeholder="カテゴリーの名前を入力" name="c" value="<?=$_GET['c']??""?>">
+                                <datalist id="datalistOptions">
+                                </datalist>
                             </form>
                         </div>
                     </div>
@@ -35,15 +42,20 @@ include_once('../th-config.php');
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
         <script>
-            function getArticle(q = ""){
-                $.post("/api/articles/search/",{"q":q},(data)=>{
+            function getArticle(q = "",c=""){
+                $.post("/api/articles/search/",{"q":q,"c":c},(data)=>{
                     if(data.result==true){
                         document.getElementById('result').innerHTML = data.data;
                     }
                 });
             }
             window.onload = ()=>{
-                getArticle("<?=$_GET['q']??""?>");
+                getArticle("<?=$_GET['q']??""?>","<?=$_GET["c"]??""?>");
+                $.post("/api/admin/category/get/",(data)=>{
+                    if(data.result==true){
+                        document.getElementById('datalistOptions').innerHTML = data.data;
+                    }
+                })
             }
         </script>
     </body>

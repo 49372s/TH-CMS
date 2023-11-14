@@ -34,7 +34,7 @@ function latestArticles($int = 5){
         if(!APIAuthenticate($_COOKIE['token'])){
             APIResponse(false,"Authenticate failed");
         }
-        $html = $html . '<a class="list-group-item" href="/article/?id='.$val[0].'"><span style="font-size: 2em">'.$val[1].'</span><br><span class="text-secondary">最終更新: '.$val[4].'</span></a>';
+        $html = $html . '<a class="list-group-item" href="/article/?id='.$val[0].'"><div style="line-height: 2em;position: relative;"><span style="font-size: 2em">'.$val[1].'</span><span class="ms-3 badge bg-primary" style="position: absolute; top: 50%;transform: translateY(-50%)">'.$val[3].'</span></div><span class="text-secondary">最終更新: '.$val[4].'</span></a>';
     }
     return $html;
 }
