@@ -56,7 +56,7 @@ loginRedirect();
                 $.post("/api/files/get/",{"q":q},(data)=>{
                     if(data.result==true){
                         data.data.forEach(element => {
-                                document.getElementById('fileList').innerHTML = document.getElementById('fileList').innerHTML + '<li class="list-group-item"><img src="/content/data/image_'+element["id"]+'" class="w-50 ms-auto me-auto" style="display: block"><hr>'+element["name"]+'<a class="btn btn-success" onclick="copyToCB(\'/content/data/image_'+element['id']+'\')">リンクをコピー</button></li>'
+                                document.getElementById('fileList').innerHTML = document.getElementById('fileList').innerHTML + '<li class="list-group-item"><img src="/content/data/image_'+element["id"]+'" class="w-50 ms-auto me-auto" style="display: block"><hr>'+element["name"]+'<a class="btn btn-success ms-3" onclick="copyToCB(\'/content/data/image_'+element['id']+'\')">リンクをコピー</button><button class="btn btn-danger ms-3" onclick="requestDelete(\''+element['id']+'\'">削除</button></li>'
                         });
                     }
                 });
@@ -67,6 +67,14 @@ loginRedirect();
             function copyToCB(str){
                 navigator.clipboard.writeText(str).then(()=>{
                     window.alert("コピーしました。");
+                })
+            }
+            function requestDelete(id){
+                $.post("/api/files/delete/",{"id":id},(data)=>{
+                    if(data.result==true){
+                        window.alert("ファイルの削除に成功しました。");
+                        location.reload();
+                    }
                 })
             }
         </script>
