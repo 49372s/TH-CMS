@@ -12,9 +12,9 @@ if(!empty($_GET['mode'])){
     $html = "";
 }
 foreach($res as $val){
-    if(!APIAuthenticate($_COOKIE['token'])){
+    /*if(!APIAuthenticate($_COOKIE['token'])){
         APIResponse(false,"Authenticate failed");
-    }
+    }*/
     if(!empty($_POST['q'])){
         if(mb_strpos($val[1],$_POST['q'])===false){
             continue;
