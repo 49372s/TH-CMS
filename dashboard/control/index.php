@@ -32,6 +32,7 @@ loginRedirect();
                                 if(checkAuthenticateMisskey(getUserID($_COOKIE["token"]))==true){
                                     ?>
                                     <p>連携済みです</p>
+                                    <p><a href="/api/users/update/?mode=unassignMisskey" class="btn btn-danger">Misskey連携の解除</a></p>
                                     <?php
                                 }else{
                                     ?>
