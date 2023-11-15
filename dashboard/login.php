@@ -16,6 +16,8 @@ if(loginCheck()){
     <body>
         <style>
             body{
+                width: 100vw;
+                height: 100vh;
                 background-size: cover;
                 background-repeat: no-repeat;
                 <?php
@@ -57,6 +59,7 @@ if(loginCheck()){
                 <input type="password" name="password" id="password" class="form-control mb-3">
                 <div class="text-center">
                     <button class="btn btn-primary">ログイン</button>
+                    <span class="text-danger" style="display: block;"><?=$_GET["mes"]??""?></span>
                 </div>
                 <a href="forget.php" class="options">パスワードを忘れた</a> | 
                 <a href="/" class="options">サービスに戻る</a>

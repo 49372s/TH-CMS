@@ -13,7 +13,7 @@ function loginCheck(){
 function loginRedirect(){
     if(!loginCheck()){
         http_response_code(401);
-        header('Location: ./login.php');
+        header('Location: /dashboard/login.php');
         exit();
     }
 }
@@ -29,7 +29,10 @@ function AdminAuthenticate($user,$pass){
             exit();
         }
     }
-    APIResponse(false,"Login authenticate is failed.");
+    //APIResponse(false,"Login authenticate is failed.");
+    http_response_code(401);
+    header('Location: /dashboard/login.php?mes=ログインできませんでした。');
+    exit();
 }
 
 function APIAuthenticate($token){

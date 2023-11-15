@@ -12,12 +12,12 @@ foreach($res as $val){
     }
 }
 if($pw==null){
-    if(empty($_POST["password"])){
-        header('Location: /logout.php');
-    }else{
-        $pw = hash("sha3-512",$_POST["password"]);
-    }
+    header('Location: /logout.php');
 }
+if(!empty($_POST["password"])){
+    $pw = hash("sha3-512",$_POST["password"]);
+}
+
     $sql = "UPDATE user set nickname=:n, pwd=:p where uid=:uid";
     $pre = $pdo->prepare($sql);
     $arr = array(":uid"=>getUserID($_COOKIE["token"]),":n"=>$_POST["nickname"],":p"=>$pw);
