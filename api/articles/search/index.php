@@ -12,9 +12,9 @@ if(!empty($_GET['mode'])){
     $html = "";
 }
 foreach($res as $val){
-    if(!APIAuthenticate($_COOKIE['token'])){
+    /*if(!APIAuthenticate($_COOKIE['token'])){
         APIResponse(false,"Authenticate failed");
-    }
+    }*/
     if(!empty($_POST['q'])){
         if(mb_strpos($val[1],$_POST['q'])===false){
             continue;
@@ -25,7 +25,7 @@ foreach($res as $val){
             continue;
         }
     }
-    $html = $html . '<a class="list-group-item" href="/article/?id='.$val[0].'"><div style="line-height: 2em;position: relative;"><span style="font-size: 2em">'.$val[1].'</span><span class="ms-3 badge bg-primary" style="position: absolute; top: 50%;transform: translateY(-50%)">'.$val[3].'</span></div><span class="text-secondary">最終更新: '.$val[4].'</span></a>';
+    $html = $html . '<a class="list-group-item" href="/article/?id='.$val[0].'"><div style="line-height: 2em;position: relative;"><span style="font-size: 2em">'.$val[1].'</span><span class="ms-3 badge bg-primary">'.$val[3].'</span></div><span class="text-secondary">最終更新: '.$val[4].'</span></a>';
 }
 APIResponse(true,$html);
 ?>
