@@ -17,13 +17,13 @@
 /**ここから下は、プラグインに対しての関数になります。通常はユーザー向けに扱いません。 */
 class master{
     public static function addPlugin($arr){
-        if(!file_exists($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.json")){
-            $fhd = fopen($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.json","w");
+        if(!file_exists($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache")){
+            $fhd = fopen($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache","w");
             fwrite($fhd, json_encode(array(),JSON_UNESCAPED_UNICODE));
             fclose($fhd);
         }
         
-        $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.json");
+        $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
         $pluginsFile = json_decode($f,true);
         if(master::deplicateCheck($pluginsFile,$arr)==false){
             array_push($pluginsFile,$arr);
@@ -32,7 +32,7 @@ class master{
             array_splice($pluginsFile, $key, 1);
             array_push($pluginsFile,$arr);
         }
-        $fhd = fopen($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.json","w");
+        $fhd = fopen($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache","w");
         fwrite($fhd, json_encode($pluginsFile,JSON_UNESCAPED_UNICODE));
         fclose($fhd);
     }
@@ -101,7 +101,7 @@ class master{
         }
     }
     public static function getPluginsInfo($id){
-        $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.json");
+        $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
         $pluginsFile = json_decode($f,true);
         print_r($pluginsFile);
         foreach($pluginsFile as $val){
@@ -111,7 +111,7 @@ class master{
         }
     }
     public static function outputPluginsList(){
-        $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.json");
+        $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
         $pluginsFile = json_decode($f,true);
         $list = $pluginsFile;
         $html = "";
