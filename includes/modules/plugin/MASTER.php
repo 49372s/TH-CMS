@@ -98,6 +98,7 @@ class master{
                 ":s" => 0
             );
             $pre->execute($arr);
+            return false;
         }
     }
     public static function getPluginsInfo($id){

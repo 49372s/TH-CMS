@@ -18,6 +18,7 @@ loginRedirect();
                     <tr><th scope="col" style="word-break: keep-all;">プラグイン名</th><th scope="col">詳細</th><th scope="col">作者</th><th scope="col" style="word-break: keep-all;">設定</th><th scope="col" style="word-break: keep-all;">有効・無効</th></tr>
                 </thead>
                 <tbody>
+                    <tr><td>PLUGIN MASTER</td><td>プラグインマスタ v1.0</td><td>SYSTEM</td><td><?=master::initialize();?></td><td>このプラグインは無効化できません。</td></tr>
                     <?=master::outputPluginsList();?>
                 </tbody>
             </table>
