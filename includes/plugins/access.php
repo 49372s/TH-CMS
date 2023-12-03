@@ -124,7 +124,6 @@ class AccessCounter {
             }
         }
         if($sessionExist == false){
-            print("fals");
             $sql = "INSERT into access_control(`id`, `session`, `lastdate`) values(:i,:s,:l)";
             $pre = $pdo->prepare($sql);
             $arr = array(
@@ -133,6 +132,7 @@ class AccessCounter {
                 ":l" => date('Ymd')
             );
             $pre->execute($arr);
+            return false;
         }
         return true;
     }
