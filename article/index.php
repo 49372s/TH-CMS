@@ -21,6 +21,10 @@ if(empty($author) || empty($title) || empty($category) || empty($lastUpdate)){
     http_response_code(404);
     exit();
 }
+//アクセスカウンター
+//$access["pv"] ... ページビュー数。リロードするたびに増える。なんど訪問されたかを把握する
+//$access["ua"] ... ユニークアクセス。一日一回のみ記録。一日何人訪れたかを把握する。
+$access = AccessCounter::count($_GET['id']);
 ?>
 <html lang="ja-jp">
     <head>
@@ -36,7 +40,7 @@ if(empty($author) || empty($title) || empty($category) || empty($lastUpdate)){
         <section class="m-3">
             <div>
                 <h1><?=$title?></h1>
-                <div class="text-secondary">最終更新: <?=$lastUpdate?></div>
+                <div class="text-secondary">最終更新: <?=$lastUpdate?> | 閲覧数: PV(<?=$access["pv"]?>) / UA(<?=$access["ua"]?>)</div>
             </div>
             <hr>
             <?=readArticles($_GET['id']);?>

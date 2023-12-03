@@ -29,7 +29,7 @@ $article = getArticle($_GET["id"]);
                 <div class="mb-3">
                     <label for="cat" class="form-label">カテゴリー</label>
                     <input class="form-control" list="datalistOptions" id="cat" placeholder="カテゴリーの名前を入力" name="cat" value="<?=$article["category"]?>">
-                    <p>カテゴリーが存在しない場合→<a href="../../category/new">カテゴリーの追加</a></p>
+                    <p>カテゴリーが存在しない場合→<a href="/dashboard/new/categories.php">カテゴリーの追加</a></p>
                     <datalist id="datalistOptions">
                     </datalist>
                 </div>

@@ -158,7 +158,7 @@ function toggleLoading(flug=true){
 }
 
 function view(id){
-    window.open("/view/?id="+id);
+    window.open("/article/?id="+id);
 }
 
 function getCategory(q = ""){

@@ -76,10 +76,11 @@ try{
         exit();
     }
     //最悪な気分です。余計なものをコミットしたせいで削除しないといけません。リポジトリ変えるまでそのままとか罰ゲームにもほどがあるだろ。ignoreに追加し忘れただけなのに。なので手動削除。
-    unlink($_SERVER['DOCUMENT_ROOT'].'/content/data/blog_32b1e47d-abde-48cc-8132-1264d7f134b5.html');
+    /*unlink($_SERVER['DOCUMENT_ROOT'].'/content/data/blog_32b1e47d-abde-48cc-8132-1264d7f134b5.html');
     unlink($_SERVER['DOCUMENT_ROOT'].'/content/data/image_861edf39-5220-42ac-8378-c8ede5fdc328');
     unlink($_SERVER['DOCUMENT_ROOT'].'/content/data/image_2932ce18-f138-473a-8d67-9978c6a36bd6');
     unlink($_SERVER['DOCUMENT_ROOT'].'/content/data/image_8040ffbe-d17e-4d05-a34e-f18c0f5b93b0');
+    */
     //設定ファイルを作成する
     $_sitename = $_POST['siteName'];
     $_sitedetails = $_POST['siteDetail'];
