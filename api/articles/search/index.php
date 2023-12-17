@@ -4,9 +4,14 @@ include($_SERVER["DOCUMENT_ROOT"].'/th-config.php');
 $pdo = cdb();
 
 $res = $pdo->query("SELECT * from article order by militime desc");
-if(!empty($_GET['mode'])){
-    if($_GET['mode']=="1"){
-        $html = array();
+if(!empty($_POST['mode'])){
+    if($_POST['mode']=="1"){
+        if(master::getPluginStatus(search::$id)==true){
+            APIResponse(true,search::searchByCategory($_POST["c"]));
+        }else{
+            APIResponse(false,"INVALID");
+        }
+        APIResponse(false,"Undefined");
     }
 }else{
     $html = "";

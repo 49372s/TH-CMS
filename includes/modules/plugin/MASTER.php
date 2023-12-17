@@ -102,13 +102,16 @@ class master{
         }
     }
     public static function getPluginsInfo($id){
-        $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
-        $pluginsFile = json_decode($f,true);
-        print_r($pluginsFile);
-        foreach($pluginsFile as $val){
-            if($val["id"] == $id){
-                return $val;
+        $max_try = 3;
+        for ($try=0; $try < $max_try; $try++) {
+            $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
+            $pluginsFile = json_decode($f,true);
+            foreach($pluginsFile as $val){
+                if($val["id"] == $id){
+                    return $val;
+                }
             }
+            sleep(1);
         }
     }
     public static function outputPluginsList(){
