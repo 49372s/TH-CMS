@@ -1,5 +1,5 @@
 <?php
-require($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/MASTER.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/MASTER.php");
 //アクセスカウンタプラグイン
 class AccessCounter {
     //プラグインID
