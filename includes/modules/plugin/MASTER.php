@@ -17,6 +17,7 @@
 /**ここから下は、プラグインに対しての関数になります。通常はユーザー向けに扱いません。 */
 class master{
     public static function addPlugin($arr){
+        //いちおうエラー回避のつもりだった(動作しないらしいが)
         if(!file_exists($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache")){
             $fhd = fopen($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache","w");
             fwrite($fhd, json_encode(array(),JSON_UNESCAPED_UNICODE));
@@ -24,6 +25,13 @@ class master{
         }
         
         $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
+        if($f == "null" || $f == null){
+            //after fail
+            unlink($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
+            $fhd = fopen($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache","w");
+            fwrite($fhd, json_encode(array(),JSON_UNESCAPED_UNICODE));
+            fclose($fhd);
+        }
         $pluginsFile = json_decode($f,true);
         if(master::deplicateCheck($pluginsFile,$arr)==false){
             array_push($pluginsFile,$arr);
@@ -125,6 +133,10 @@ class master{
         return $html;
     }
     public static function deplicateCheck($b, $s){
+        //エラー回避(根本的解決にはならない)
+        if($b == null || $b == array()){
+            return false;
+        }
         foreach($b as $val){
             if($s["id"] == $val["id"]){
                 if($s["status"] == $val["status"]){
