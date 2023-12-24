@@ -26,11 +26,13 @@ class master{
         
         $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
         if($f == "null" || $f == null){
-            //after fail
+            //もしファイルが壊れているようであれば、削除し再生成する
             unlink($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
             $fhd = fopen($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache","w");
             fwrite($fhd, json_encode(array(),JSON_UNESCAPED_UNICODE));
             fclose($fhd);
+            //一応これも追加してみる？
+            $f = array();
         }
         $pluginsFile = json_decode($f,true);
         if(master::deplicateCheck($pluginsFile,$arr)==false){
