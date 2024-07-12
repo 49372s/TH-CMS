@@ -1,0 +1,57 @@
+body{
+    overflow: hidden;
+}
+section.top-card{
+    position: relative;
+    width: calc(100vw);
+    height: 100vh;
+    padding: 0;
+    left: -10px;
+
+    background-image: url(https://r2.tkngh.jp//e1cd3fa5-2771-419a-95c4-d25fe7a83b92.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
+}
+section.top-card .cover{
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    background-color: rgba(0, 0, 0, .4);
+    width: 100%;
+    height: 100%;
+}
+section.top-card .content{
+    position: absolute;
+    width: 100vw;
+    top: 50%;
+
+    transform: translateY(-50%);
+    color: white;
+}
+
+section.top-card .content .top{
+    font-size: 3em;
+    text-align: center;
+    font-weight: bold;
+}
+section.top-card .content .text{
+    width: fit-content;
+    margin: auto;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.btn{
+    padding: 5px 10px;
+    background-color: #0d6efd;
+    border-radius: 5px;
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all .4s ease;
+}
+
+.btn:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+}
