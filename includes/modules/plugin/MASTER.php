@@ -71,7 +71,10 @@ class master{
             $sql = "CREATE TABLE IF NOT EXISTS `plugins` (
                 `id` varchar(255) NOT NULL,
                 `name` varchar(255) NOT NULL,
-                `status` int(255) NOT NULL
+                `detail` varchar(255) NOT NULL,
+                `config` varchar(5000) NOT NULL,
+                `status` int(255) NOT NULL,
+                `author` varchar(255) NOT NULL
                 , PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
             if($pdo -> query($sql) == false){
                 echo json_encode(array("result"=>"fail","detail"=>"データベースの構築に失敗しました。権限を確認してください。"));
