@@ -26,11 +26,13 @@ class master{
         
         $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
         if($f == "null" || $f == null){
-            //after fail
+            //もしファイルが壊れているようであれば、削除し再生成する
             unlink($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
             $fhd = fopen($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache","w");
             fwrite($fhd, json_encode(array(),JSON_UNESCAPED_UNICODE));
             fclose($fhd);
+            //一応これも追加してみる？
+            $f = array();
         }
         $pluginsFile = json_decode($f,true);
         if(master::deplicateCheck($pluginsFile,$arr)==false){
@@ -69,7 +71,10 @@ class master{
             $sql = "CREATE TABLE IF NOT EXISTS `plugins` (
                 `id` varchar(255) NOT NULL,
                 `name` varchar(255) NOT NULL,
-                `status` int(255) NOT NULL
+                `detail` varchar(255) NOT NULL,
+                `config` varchar(5000) NOT NULL,
+                `status` int(255) NOT NULL,
+                `author` varchar(255) NOT NULL
                 , PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
             if($pdo -> query($sql) == false){
                 echo json_encode(array("result"=>"fail","detail"=>"データベースの構築に失敗しました。権限を確認してください。"));
