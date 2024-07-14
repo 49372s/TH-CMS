@@ -49,13 +49,13 @@ if($flug != 1){
     APIResponse(false,"Undefined error");
 }
 
-//$html = Markdown::defaultTransform($body);
+//html = Markdown::defaultTransform($body);
 $html = $body;
 if(!file_exists($_SERVER['DOCUMENT_ROOT']."/content/data/")){
     mkdir($_SERVER['DOCUMENT_ROOT']."/content/data/");
 }
 $fhd = fopen($_SERVER['DOCUMENT_ROOT']."/content/data/blog_$uuid.html","w");
-fwrite($fhd,$html);
+fwrite($fhd,$body);
 fclose($fhd);
 
 if($mode === true || $mode === "1" || $mode === "true"){
