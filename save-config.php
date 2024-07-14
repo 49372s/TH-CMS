@@ -59,7 +59,7 @@ try{
         exit();
     }
 
-    include('./includes/plugins/uuid.php');
+    include('./includes/plugins/_uuid.php');
     $sql = "INSERT into user(uid,handle,nickname,mail,pwd,mi,permit) value(:u,:h,:n,:m,:p,:mi,:pe)";
     $pre = $pdo->prepare($sql);
     $arr = array(

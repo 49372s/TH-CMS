@@ -95,7 +95,7 @@ class master{
         foreach($res as $val){
             if($val[0] == $id){
                 $flug = true;
-                if($val[2] == 1){
+                if($val[4] == 1){
                     return true;
                 }else{
                     return false;
@@ -103,12 +103,15 @@ class master{
             }
         }
         if($flug == false){
-            $sql = "INSERT into plugins(id, name, status) values(:i,:n,:s)";
+            $sql = "INSERT into plugins(id, name, detail, config, status, author) values(:i, :n, :d, :c, :s, :a)";
             $pre = $pdo->prepare($sql);
             $arr = array(
                 ":i" => $id,
                 ":n" => master::getPluginsInfo($id)["name"],
-                ":s" => 0
+                ":d" => master::getPluginsInfo($id)["detail"],
+                ":c" => master::getPluginsInfo($id)["config"],
+                ":s" => intval(master::getPluginsInfo($id)["status"]),
+                ":a" => master::getPluginsInfo($id)["author"]
             );
             $pre->execute($arr);
             return false;
@@ -117,15 +120,26 @@ class master{
     public static function getPluginsInfo($id){
         $max_try = 3;
         for ($try=0; $try < $max_try; $try++) {
-            $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
+            if(file_exists($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache")){
+                $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
+            }else{
+                $f = "[]";
+            }
+            if($f == "null" || $f == null){
+                $f = "[]";
+                unlink($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
+
+            }
             $pluginsFile = json_decode($f,true);
             foreach($pluginsFile as $val){
                 if($val["id"] == $id){
                     return $val;
+                    break;
                 }
             }
             sleep(1);
         }
+        return [];
     }
     public static function outputPluginsList(){
         $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
@@ -133,7 +147,7 @@ class master{
         $list = $pluginsFile;
         $html = "";
         foreach($list as $val){
-            $html = $html . "<tr><td style=\"word-break: keep-all;\">".$val['name']."</td><td style=\"word-break: break-all;\">".$val["detail"]."</td><td style=\"word-break: keep-all;\">".$val["author"]."</td><td style=\"word-break: keep-all;\">".$val["config"]."</td><td style=\"word-break: keep-all;\">".master::getToggle($val['id'],$val["status"])."</td></tr>\n";
+            $html = $html . "<tr><td style=\"word-break: keep-all;\">".$val['name']."</td><td style=\"word-break: break-all;\">".$val["detail"]."</td><td style=\"word-break: keep-all;\">".$val["author"]."</td><td style=\"word-break: keep-all;\">".$val["config"]."</td><td style=\"word-break: keep-all;\">".master::getToggle($val['id'],master::getPluginStatus($val['id']))."</td></tr>\n";
         }
         return $html;
     }
