@@ -107,7 +107,7 @@ class master{
             $pre = $pdo->prepare($sql);
             $arr = array(
                 ":i" => $id,
-                ":n" => master::getPluginsInfo($id)["name"],
+                ":n" => master::getPluginsInfo($id)["name"]??"",
                 ":s" => 0
             );
             $pre->execute($arr);
@@ -117,7 +117,15 @@ class master{
     public static function getPluginsInfo($id){
         $max_try = 3;
         for ($try=0; $try < $max_try; $try++) {
-            $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
+            if(file_exists($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache")){
+                $f = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
+            }else{
+                $f = "[]";
+            }
+            if($f == "null" || $f == null){
+                $f = "[]";
+                unlink($_SERVER["DOCUMENT_ROOT"]."/includes/modules/plugin/plugins.cache");
+            }
             $pluginsFile = json_decode($f,true);
             foreach($pluginsFile as $val){
                 if($val["id"] == $id){
