@@ -60,6 +60,9 @@ class master{
         $sql = "SELECT 1 FROM information_schema.tables WHERE table_name = 'plugins' and table_schema = '".$CMS_CONFIG["mysql"]["database"]."'";
         $query = $pdo->query($sql);
         $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        if($data == null || $data == array() || $data == []){
+            return false;
+        }
         if($data[0][1] == 1){
             return true;
         }
@@ -107,11 +110,11 @@ class master{
             $pre = $pdo->prepare($sql);
             $arr = array(
                 ":i" => $id,
-                ":n" => master::getPluginsInfo($id)["name"],
-                ":d" => master::getPluginsInfo($id)["detail"],
-                ":c" => master::getPluginsInfo($id)["config"],
-                ":s" => intval(master::getPluginsInfo($id)["status"]),
-                ":a" => master::getPluginsInfo($id)["author"]
+                ":n" => master::getPluginsInfo($id)["name"]??"",
+                ":d" => master::getPluginsInfo($id)["detail"]??"",
+                ":c" => master::getPluginsInfo($id)["config"]??"",
+                ":s" => intval(master::getPluginsInfo($id)["status"]??0),
+                ":a" => master::getPluginsInfo($id)["author"]??""
             );
             $pre->execute($arr);
             return false;
