@@ -132,7 +132,7 @@ if(file_exists('./th-config.php')){
                 },(data)=>{
                     if(data.result == "success"){
                         window.alert("設定の保存に成功しました。");
-                        location.href = "";
+                        location.href = "/";
                     }else{
                         window.alert("設定の保存に失敗しました。\n"+data.detail);
                     }
